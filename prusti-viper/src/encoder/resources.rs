@@ -25,3 +25,16 @@ pub fn change_scope_id(expr: Expr, scope_ids: &[isize]) -> Expr {
     let mut changer = Changer { scope_ids };
     changer.fold(expr)
 }
+
+struct Remover;
+
+impl ExprFolder for Remover {
+    fn fold_resource_access_predicate(&mut self, expr: ResourceAccessPredicate) -> Expr {
+        true.into()
+    }
+}
+
+pub fn remove_resources(expr: Expr) -> Expr {
+    let mut remover = Remover {};
+    remover.fold(expr)
+}

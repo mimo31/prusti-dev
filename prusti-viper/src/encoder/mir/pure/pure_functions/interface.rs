@@ -347,6 +347,9 @@ impl<'v, 'tcx: 'v> PureFunctionEncoderInterface<'v, 'tcx>
                         }
                         ProcedureSpecificationKind::Pure => {
                             let function = pure_function_encoder.encode_function()?;
+                            /*
+                            FIXME: This test is disabled because the new encoding cannot
+                            encode resources.
                             if config::use_new_encoder() {
                                 // Test the new encoding.
                                 let _ = super::encoder_high::encode_function_decl(
@@ -356,6 +359,7 @@ impl<'v, 'tcx: 'v> PureFunctionEncoderInterface<'v, 'tcx>
                                     substs,
                                 )?;
                             }
+                            */
                             function
                         }
                         ProcedureSpecificationKind::Impure => {

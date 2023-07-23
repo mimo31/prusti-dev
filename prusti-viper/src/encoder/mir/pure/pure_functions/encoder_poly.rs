@@ -18,6 +18,7 @@ use crate::encoder::{
         specifications::SpecificationsInterface,
     },
     mir_encoder::PlaceEncoder,
+    resources::remove_resources,
     snapshot::interface::SnapshotEncoderInterface,
     Encoder,
 };
@@ -311,8 +312,8 @@ impl<'p, 'v: 'p, 'tcx: 'v> PureFunctionEncoder<'p, 'v, 'tcx> {
 
         let (type_precondition, func_precondition) = self.encode_precondition_expr(&contract)?;
 
-        let mut precondition = vec![type_precondition, func_precondition];
-        let mut postcondition = vec![self.encode_postcondition_expr(&contract)?];
+        let mut precondition = vec![type_precondition, remove_resources(func_precondition)];
+        let mut postcondition = vec![remove_resources(self.encode_postcondition_expr(&contract)?)];
 
         let formal_args = self.encode_formal_args()?;
         let return_type = self.encode_function_return_type()?;
